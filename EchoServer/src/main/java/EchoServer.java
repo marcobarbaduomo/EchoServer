@@ -23,10 +23,11 @@ public class EchoServer {
                     System.out.print("Connection received: [" + client.getInetAddress().getHostAddress() + "] ");
 
                     response = in.readLine();
-                    System.out.println("String received = " +response);
-
-                    out.write(response.toUpperCase());
-                    
+                    while(!response.equals("exit")){
+                        System.out.println("String received = "+response);
+                        out.write(response.toUpperCase());
+                        response = in.readLine();
+                    }
                     client.close();
 
                 } catch (IOException ex) {
