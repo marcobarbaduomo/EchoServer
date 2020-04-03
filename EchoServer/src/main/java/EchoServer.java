@@ -28,6 +28,7 @@ public class EchoServer {
                         out.write(response.toUpperCase());
                         response = in.readLine();
                     }
+                    System.out.println("Exit from while");
                     client.close();
 
                 } catch (IOException ex) {
