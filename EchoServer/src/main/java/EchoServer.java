@@ -1,0 +1,49 @@
+import java.net.ServerSocket;
+import java.net.Socket;
+import java.net.InetAddress;
+import java.io.*;
+
+public class EchoServer {
+
+    public static void main(String[] argv) {
+        try {
+            ServerSocket server = new ServerSocket(2500, 10);
+            System.out.println("Server avviato...");
+            Socket client = null;
+
+            while (true) {
+                try {
+                    client = server.accept();
+
+                    int c;
+                    String response = "";
+                    BufferedReader in = new BufferedReader(new InputStreamReader(client.getInputStream()));
+                    PrintWriter out = new PrintWriter(new OutputStreamWriter(client.getOutputStream()), true);
+
+                    System.out.print("Connection received: [" + client.getInetAddress().getHostAddress() + "] ");
+
+                    response = in.readLine();
+                    System.out.println("String received = " +response);
+
+                    out.write(response.toUpperCase());
+                    
+                    client.close();
+
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                } finally {
+                    try {
+                        if (client != null) {
+                            client.close();
+                        }
+                    } catch (IOException ex) {
+                        ex.printStackTrace();
+                    }
+                }
+            }
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+    }
+}
